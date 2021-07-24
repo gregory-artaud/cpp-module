@@ -35,14 +35,15 @@ int FtReplace::ftReplace(std::string s1, std::string s2, std::string fileName)
 	while (std::getline(ifile, line))
 	{
 		i = 0;
-		while ((i = line.find(s1, i) != std::string::npos))
+		while ((i = line.find(s1, i)) != std::string::npos)
 		{
-			std::cout << "i: " << i << std::endl;
 			line.erase(i, s1.length());
 			line.insert(i, s2);
 			i++;
 		}
 		ofile << line << std::endl;
 	}
+	ifile.close();
+	ofile.close();
 	return (0);
 }
