@@ -5,7 +5,7 @@ NAME	= zombie_test
 FILES	= $(shell find *.cpp)
 OBJ		= $(FILES:%.cpp=%.o)
 CC		= clang++
-CFLAGS	= -Wall -Werror -Wextra
+CFLAGS	= -Wall -Werror -Wextra -std=c++98
 SHELL	= /bin/bash
 
 #

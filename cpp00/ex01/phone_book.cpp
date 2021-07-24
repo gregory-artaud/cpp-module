@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include "phone_book.hpp"
 
 int		get_type(std::string s)

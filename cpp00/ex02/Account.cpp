@@ -1,6 +1,6 @@
 #include <iostream>
 #include <iomanip>
-#include <chrono>
+#include <ctime>
 #include "Account.hpp"
 
 int Account::_nbAccounts = 0;
@@ -116,6 +116,7 @@ int		Account::checkAmount( void ) const
 
 void	Account::_displayTimestamp( void )
 {
+	/*
 	std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
 	std::time_t time_now = std::chrono::system_clock::to_time_t(now);
 
@@ -126,6 +127,29 @@ void	Account::_displayTimestamp( void )
 			<< std::setw(2) << utc_tm.tm_hour
 			<< std::setw(2) << utc_tm.tm_min
 			<< std::setw(2) << utc_tm.tm_sec << "]";
+	*/
+	std::time_t t = std::time(0);
+	std::tm *now = std::localtime(&t);
+
+	std::cout << "[" << (now->tm_year + 1900);
+	if (now->tm_mon + 1 < 10)
+		std::cout << '0';
+	std::cout << (now->tm_mon + 1);
+	if (now->tm_mday + 1 < 10)
+		std::cout << '0';
+	std::cout << (now->tm_mday + 1);
+	if (now->tm_mon + 1 < 10)
+		std::cout << '0';
+	std::cout << (now->tm_mon + 1) << '_';
+	if (now->tm_hour + 1 < 10)
+		std::cout << '0';
+	std::cout << (now->tm_hour + 1);
+	if (now->tm_min + 1 < 10)
+		std::cout << '0';
+	std::cout << (now->tm_min + 1);
+	if (now->tm_sec + 1 < 10)
+		std::cout << '0';
+	std::cout << (now->tm_sec + 1) << "] ";
 }
 
 void	Account::displayStatus( void ) const
