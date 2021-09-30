@@ -10,6 +10,17 @@ WrongAnimal::~WrongAnimal()
 	
 }
 
+WrongAnimal::WrongAnimal(const WrongAnimal &c)
+{
+	this->type = c.type;
+}
+
+WrongAnimal &			WrongAnimal::operator=( WrongAnimal const & rhs )
+{
+	this->type = rhs.type;
+	return *this;
+}
+
 std::string	WrongAnimal::getType(void) const
 {
 	return (this->type);

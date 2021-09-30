@@ -10,6 +10,17 @@ Animal::~Animal()
 	
 }
 
+Animal::Animal(const Animal &c)
+{
+	this->type = c.type;
+}
+
+Animal &			Animal::operator=( Animal const & rhs )
+{
+	this->type = rhs.type;
+	return *this;
+}
+
 std::string	Animal::getType(void) const
 {
 	return (this->type);
