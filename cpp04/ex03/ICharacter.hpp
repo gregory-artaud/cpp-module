@@ -7,7 +7,7 @@
 
 class ICharacter  
 {
-	private:
+	protected:
 		std::string	name;
 
 	public:

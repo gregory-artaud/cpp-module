@@ -12,7 +12,7 @@ Character::~Character()
 
 std::string const & Character::getName() const
 {
-	
+	return (this->name);
 }
 
 void Character::equip(AMateria* m)
