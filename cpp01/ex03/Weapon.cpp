@@ -7,7 +7,6 @@ Weapon::Weapon()
 	
 Weapon::Weapon(std::string type)
 {
-	Weapon();
 	this->type = type;
 }
 

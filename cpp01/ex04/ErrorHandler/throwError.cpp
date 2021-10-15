@@ -17,7 +17,6 @@ int ErrorHandler::throwError(const int code)
 	case FILE_DO_NOT_EXISTS:
 		std::cout << FILE_DO_NOT_EXISTS_MSG;
 		break;
-		break;
 	case CANNOT_CREATE_FILE:
 		std::cout << CANNOT_CREATE_FILE_MSG;
 	default:
