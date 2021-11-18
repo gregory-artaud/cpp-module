@@ -3,10 +3,12 @@
 
 #include <iostream>
 #include <string>
+#include "Form.hpp"
 
 #define MAX_GRADE 1
 #define MIN_GRADE 150
 
+class Form;
 class Bureaucrat
 {
 	private:
@@ -36,7 +38,7 @@ class Bureaucrat
 
 		void incrementGrade(void);
 		void decrementGrade(void);
-
+		void signForm(Form &f);
 };
 
 std::ostream &operator<<(std::ostream &out, Bureaucrat const &b);
