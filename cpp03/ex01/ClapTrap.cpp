@@ -3,6 +3,7 @@
 /*
 ** ------------------------------- CONSTRUCTOR --------------------------------
 */
+
 ClapTrap::ClapTrap()
 {
 	std::cout << "ClapTrap default constructor call" << std::endl;
@@ -36,7 +37,15 @@ ClapTrap::~ClapTrap()
 ** --------------------------------- OVERLOAD ---------------------------------
 */
 
-
+ClapTrap &ClapTrap::operator=(ClapTrap const &rhs)
+{
+	std::cout << "ClapTrap operator= call" << std::endl;
+	this->name = rhs.name;
+	this->hit_points = rhs.hit_points;
+	this->energy_points = rhs.energy_points;
+	this->attack_damage = rhs.attack_damage;
+	return *this;
+}
 /*
 ** --------------------------------- METHODS ----------------------------------
 */
