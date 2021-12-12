@@ -4,6 +4,19 @@
 ** ------------------------------- CONSTRUCTOR --------------------------------
 */
 
+FragTrap::FragTrap(void)
+{
+	std::cout << "FragTrap default constructor called" << std::endl;
+	return ;
+}
+
+FragTrap::FragTrap(FragTrap const &src)
+{
+	std::cout << "FragTrap copy constructor called" << std::endl;
+	*this = src;
+	return ;
+}
+
 FragTrap::FragTrap(std::string name)
 {
 	std::cout << "FragTrap constructor call" << std::endl;
@@ -28,6 +41,15 @@ FragTrap::~FragTrap()
 ** --------------------------------- OVERLOAD ---------------------------------
 */
 
+FragTrap &FragTrap::operator=(FragTrap const &rhs)
+{
+	std::cout << "FragTrap assignment operator called" << std::endl;
+	this->name = rhs.name;
+	this->hit_points = rhs.hit_points;
+	this->energy_points = rhs.energy_points;
+	this->attack_damage = rhs.attack_damage;
+	return *this;
+}
 
 /*
 ** --------------------------------- METHODS ----------------------------------
