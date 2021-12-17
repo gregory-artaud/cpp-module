@@ -18,6 +18,7 @@ Cure::Cure(const Cure & c) : AMateria(c.getType())
 Cure & Cure::operator=(const Cure & rhs)
 {
 	this->type = rhs.getType();
+	return (*this);
 }
 
 Cure* Cure::clone() const

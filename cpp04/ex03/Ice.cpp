@@ -17,6 +17,7 @@ Ice::Ice(const Ice & i) : AMateria(i.getType())
 Ice & Ice::operator=(const Ice & rhs)
 {
 	this->type = rhs.getType();
+	return (*this);
 }
 
 Ice* Ice::clone() const

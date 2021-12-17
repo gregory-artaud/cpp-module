@@ -2,8 +2,11 @@
 #define AMATERIA_H
 #pragma once
 
+#include <iostream>
 #include <string>
 #include "ICharacter.hpp"
+
+class ICharacter;
 
 class AMateria  
 {
@@ -12,6 +15,7 @@ class AMateria
 
 	public:
 		AMateria(std::string const & type);
+		AMateria();
 		AMateria(const AMateria & a);
 		virtual ~AMateria();
 
