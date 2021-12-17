@@ -18,10 +18,9 @@ class Animal
 
 	public:
 
-		virtual void	makeSound(void) const;
+		virtual void	makeSound(void) const = 0;
 		std::string	getType(void) const;
 		Animal	& operator=(const Animal &d);
-		virtual Brain* getBrain(void) const = 0;
 
 };
 #endif
