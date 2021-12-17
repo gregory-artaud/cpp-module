@@ -20,5 +20,11 @@ int main(void)
 	j->makeSound();
 	meta->makeSound();
 	wmeta->makeSound();
+
+	delete meta;
+	delete i;
+	delete j;
+	delete wmeta;
+	delete wi;
 	return (0);
 }
