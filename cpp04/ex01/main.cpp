@@ -2,15 +2,17 @@
 #include "Cat.hpp"
 #include "Dog.hpp"
 
+#define N 2
+
 int main(void)
 {
-	Animal* array[100];
+	Animal* array[N];
 	const Animal* j = new Dog();
     const Animal* i = new Cat();
 
-	for (int i = 0; i < 50; i++)
+	for (int i = 0; i < N / 2; i++)
 		array[i] = new Dog();
-	for (int i = 50; i < 100; i++)
+	for (int i = N / 2; i < N; i++)
 		array[i] = new Cat();
 
 	Dog d1;
@@ -35,7 +37,7 @@ int main(void)
     delete j;
 	delete i;
 
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < N; i++)
 		delete array[i];
 
 
