@@ -21,6 +21,7 @@ class Converter
 {
 	private:
 		std::string rawData;
+		double data;
 		int dataType;
 		
 		int getDataType(std::string & data) const;

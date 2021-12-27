@@ -3,10 +3,11 @@
 Converter::Converter()
 {
 	this->rawData = "";
+	this->data = 0;
 	this->dataType = UNKNOWN;
 }
 
-Converter::Converter(Converter & src): rawData(src.rawData), dataType(src.dataType)
+Converter::Converter(Converter & src): rawData(src.rawData), data(src.data), dataType(src.dataType)
 {
 
 }
@@ -15,6 +16,9 @@ Converter::Converter(std::string rawData)
 {
 	this->rawData = rawData;
 	this->dataType = getDataType(rawData);
+	if (this->dataType == CHAR)
+		this->data = static_cast<double>(rawData.at(0));
+	this->data = (this->dataType == UNKNOWN) ? 0 : std::atof(rawData.c_str());
 }
 
 Converter::~Converter()
@@ -26,7 +30,7 @@ Converter & Converter::operator=(const Converter & rhs)
 {
 	this->rawData = rhs.rawData;
 	this->dataType = rhs.dataType;
-
+	this->data = rhs.data;
 	return *this;
 }
 
@@ -42,7 +46,17 @@ const std::string & Converter::getRawData() const
 
 std::string Converter::toChar() const
 {
-	return "";
+	char c;
+
+	if (this->dataType == CHAR)
+		return rawData;
+	if (this->dataType == NAN || this->dataType == UNKNOWN)
+		return "Impossible";
+	c = static_cast<char>(this->data);
+	std::cout << "test: " << c << std::endl;
+	//if (std::isprint(c))
+	//	return "'" + c + "'";
+	return "Non displayable";
 }
 
 std::string Converter::toInt() const
