@@ -47,31 +47,87 @@ const std::string & Converter::getRawData() const
 std::string Converter::toChar() const
 {
 	char c;
+	std::string s;
 
 	if (this->dataType == CHAR)
 		return rawData;
-	if (this->dataType == NAN || this->dataType == UNKNOWN)
-		return "Impossible";
 	c = static_cast<char>(this->data);
-	std::cout << "test: " << c << std::endl;
-	//if (std::isprint(c))
-	//	return "'" + c + "'";
-	return "Non displayable";
+	if (this->dataType == NAN || this->dataType == UNKNOWN
+		|| this->dataType == INFINITY || this->dataType == MINFINITY || this->data != c)
+		return "Impossible";
+	if (!std::isprint(c))
+		return "Non displayable";
+	s = "'";
+	s.push_back(c);
+	s += "'";
+	return s;
 }
 
 std::string Converter::toInt() const
 {
-	return "";
+	int i;
+
+	if (this->dataType == INT)
+		return rawData;
+	i = static_cast<int>(this->data);
+	if (this->dataType == NAN || this->dataType == UNKNOWN
+		|| this->dataType == INFINITY || this->dataType == MINFINITY || this->data != i)
+		return "Impossible";
+	return intToString(i);
 }
 
 std::string Converter::toFloat() const
 {
-	return "";
+	float f;
+
+	if (this->dataType == FLOAT)
+		return this->rawData;
+	f = static_cast<float>(this->data);
+	if (this->dataType == NAN)
+		return "nanf";
+	if (this->dataType == INFINITY)
+		return "inff";
+	if (this->dataType == MINFINITY)
+		return "-inff";
+	return floatToString(f);
 }
 
 std::string Converter::toDouble() const
 {
+	if (this->dataType == DOUBLE)
+		return this->rawData;
+	if (this->dataType == NAN)
+		return "nan";
+	if (this->dataType == INFINITY)
+		return "inf";
+	if (this->dataType == MINFINITY)
+		return "-inf";
+	// convert double to string here
 	return "";
+}
+
+std::string Converter::intToString(int & i) const
+{
+	std::ostringstream oss;
+
+	oss << i;
+	return oss.str();
+}
+
+std::string Converter::floatToString(float & f) const
+{
+	std::ostringstream oss;
+
+	oss << f;
+	return oss.str();
+}
+
+std::string Converter::doubleToString(double & d) const
+{
+	std::ostringstream oss;
+
+	oss << d;
+	return oss.str();
 }
 
 int Converter::getDataType(std::string & data) const

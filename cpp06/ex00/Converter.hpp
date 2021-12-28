@@ -5,6 +5,8 @@
 #include <cstdlib>
 #include <string>
 #include <iostream>
+#include <limits>
+#include <sstream>
 
 enum dataType {
 	UNKNOWN,
@@ -25,6 +27,9 @@ class Converter
 		int dataType;
 		
 		int getDataType(std::string & data) const;
+		std::string intToString(int & i) const;
+		std::string floatToString(float & f) const;
+		std::string doubleToString(double & d) const;
 
 	public:
 
