@@ -5,8 +5,10 @@
 #include <cstdlib>
 #include <string>
 #include <iostream>
-#include <limits>
+#include <float.h>
 #include <sstream>
+#include <cerrno>
+#include <limits.h>
 
 enum dataType {
 	UNKNOWN,
@@ -29,7 +31,9 @@ class Converter
 		int getDataType(std::string & data) const;
 		std::string intToString(int & i) const;
 		std::string floatToString(float & f) const;
-		std::string doubleToString(double & d) const;
+		std::string doubleToString(double d) const;
+		bool isNumeric(std::string & data) const;
+		bool isInt(std::string & data) const;
 
 	public:
 

@@ -14,11 +14,16 @@ Converter::Converter(Converter & src): rawData(src.rawData), data(src.data), dat
 
 Converter::Converter(std::string rawData)
 {
+	char* e;
+
 	this->rawData = rawData;
 	this->dataType = getDataType(rawData);
 	if (this->dataType == CHAR)
-		this->data = static_cast<double>(rawData.at(0));
-	this->data = (this->dataType == UNKNOWN) ? 0 : std::atof(rawData.c_str());
+		this->data = static_cast<double>(rawData.at(0)); // cast vers double pour eviter les erreurs de type
+	errno = 0;
+	this->data = (this->dataType == UNKNOWN) ? 0 : std::strtod(rawData.c_str(), &e); // conversion string vers double
+	if (errno || *e)
+		this->dataType = UNKNOWN;
 }
 
 Converter::~Converter()
@@ -51,7 +56,7 @@ std::string Converter::toChar() const
 
 	if (this->dataType == CHAR)
 		return rawData;
-	c = static_cast<char>(this->data);
+	c = static_cast<char>(this->data); // cast vers char 
 	if (this->dataType == NAN || this->dataType == UNKNOWN
 		|| this->dataType == INFINITY || this->dataType == MINFINITY || this->data != c)
 		return "Impossible";
@@ -67,9 +72,9 @@ std::string Converter::toInt() const
 {
 	int i;
 
-	if (this->dataType == INT)
-		return rawData;
-	i = static_cast<int>(this->data);
+	if (this->data > INT_MAX || this->data < INT_MIN)
+		return "Impossible";
+	i = static_cast<int>(this->data); // cast vers int
 	if (this->dataType == NAN || this->dataType == UNKNOWN
 		|| this->dataType == INFINITY || this->dataType == MINFINITY || this->data != i)
 		return "Impossible";
@@ -82,7 +87,9 @@ std::string Converter::toFloat() const
 
 	if (this->dataType == FLOAT)
 		return this->rawData;
-	f = static_cast<float>(this->data);
+	if (this->data > FLT_MAX || this->data < -FLT_MAX)
+		return "Impossible";
+	f = static_cast<float>(this->data); // cast vers float
 	if (this->dataType == NAN)
 		return "nanf";
 	if (this->dataType == INFINITY)
@@ -102,8 +109,7 @@ std::string Converter::toDouble() const
 		return "inf";
 	if (this->dataType == MINFINITY)
 		return "-inf";
-	// convert double to string here
-	return "";
+	return doubleToString(this->data);
 }
 
 std::string Converter::intToString(int & i) const
@@ -117,17 +123,45 @@ std::string Converter::intToString(int & i) const
 std::string Converter::floatToString(float & f) const
 {
 	std::ostringstream oss;
+	std::string s;
 
 	oss << f;
-	return oss.str();
+	s = oss.str();
+	if (isInt(s))
+		s += ".0";
+	s += "f";
+	return s;
 }
 
-std::string Converter::doubleToString(double & d) const
+std::string Converter::doubleToString(double d) const
 {
 	std::ostringstream oss;
+	std::string s;
 
 	oss << d;
-	return oss.str();
+	s = oss.str();
+	if (isInt(s))
+		s += ".0";
+	return s;
+}
+
+bool Converter::isNumeric(std::string & s) const
+{
+	std::string::iterator it;
+
+	for (it = s.begin(); it != s.end(); ++it)
+		if (!std::isdigit(*it))
+			return false;
+	return true;
+}
+
+bool Converter::isInt(std::string & s) const
+{
+	if (s.empty())
+		return false;
+	if (s.find('.', 0) != std::string::npos && !isNumeric(s))
+		return false;
+	return true;
 }
 
 int Converter::getDataType(std::string & data) const

@@ -10,7 +10,8 @@ int main(int argc, char const *argv[])
 		return (EXIT_FAILURE);
 	}
 	c = new Converter(argv[1]);
-	//std::cout << *c << std::endl;
+	if (c->getDataType() == UNKNOWN)
+		return (EXIT_FAILURE);
 	std::cout << "char: " << c->toChar() << std::endl;
 	std::cout << "int: " << c->toInt() << std::endl;
 	std::cout << "float: " << c->toFloat() << std::endl;
