@@ -16,14 +16,17 @@ Converter::Converter(std::string rawData)
 {
 	char* e;
 
+	errno = 0;
 	this->rawData = rawData;
 	this->dataType = getDataType(rawData);
 	if (this->dataType == CHAR)
 		this->data = static_cast<double>(rawData.at(0)); // cast vers double pour eviter les erreurs de type
-	errno = 0;
-	this->data = (this->dataType == UNKNOWN) ? 0 : std::strtod(rawData.c_str(), &e); // conversion string vers double
-	if (errno || *e)
-		this->dataType = UNKNOWN;
+	else
+	{
+		if (this->dataType == FLOAT)
+			this->rawData.erase(this->rawData.find("f"));
+		this->data = (this->dataType == UNKNOWN) ? 0 : std::strtod(rawData.c_str(), &e); // conversion string vers double
+	}
 }
 
 Converter::~Converter()
@@ -55,7 +58,12 @@ std::string Converter::toChar() const
 	std::string s;
 
 	if (this->dataType == CHAR)
-		return rawData;
+	{
+		s = "'";
+		s += this->rawData;
+		s += "'";
+		return s;
+	}
 	c = static_cast<char>(this->data); // cast vers char 
 	if (this->dataType == NAN || this->dataType == UNKNOWN
 		|| this->dataType == INFINITY || this->dataType == MINFINITY || this->data != c)
@@ -84,9 +92,14 @@ std::string Converter::toInt() const
 std::string Converter::toFloat() const
 {
 	float f;
+	std::string s;
 
+	s = this->rawData;
 	if (this->dataType == FLOAT)
-		return this->rawData;
+	{
+		s.push_back('f');
+		return s;
+	}
 	if (this->data > FLT_MAX || this->data < -FLT_MAX)
 		return "Impossible";
 	f = static_cast<float>(this->data); // cast vers float
@@ -171,7 +184,10 @@ int Converter::getDataType(std::string & data) const
 
 	n_dot = 0;
 	if (data.empty())
+	{
+		std::cout << "Error: empty string" << std::endl;
 		return UNKNOWN;
+	}
 	if (data == "-inf" || data == "-inff")
 		return MINFINITY;
 	if (data == "inf" || data == "inff")
