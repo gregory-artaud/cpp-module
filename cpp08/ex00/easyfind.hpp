@@ -1,6 +1,8 @@
 #ifndef EASYFIND_HPP
 #define EASYFIND_HPP
 
+#include <exception>
+#include <algorithm>
 #include <vector>
 #include <string>
 #include <iostream>
