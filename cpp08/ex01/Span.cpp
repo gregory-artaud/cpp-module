@@ -39,14 +39,17 @@ void	Span::addNumber(int const a)
 
 int	Span::shortestSpan() const
 {
+	int min_diff;
+	int diff;
+
 	if (this->_array.size() <= 1)
 		throw Span::Tab_Empty_Or_One();
 	std::set<int>::const_iterator a = this->_array.begin();
 	std::set<int>::const_iterator b = ++this->_array.begin();
-	int min_diff = *b - *a;
+	min_diff = *b - *a;
 	while (b != this->_array.end())
 	{
-		int diff = *b - *a;
+		diff = *b - *a;
 		if (diff < min_diff)
 			min_diff = diff;
 		a++;
